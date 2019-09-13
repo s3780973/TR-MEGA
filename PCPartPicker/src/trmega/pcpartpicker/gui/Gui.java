@@ -20,22 +20,21 @@ import javax.swing.border.LineBorder;
 import javax.swing.text.Document;
 
 import trmega.pcpartpicker.database.Database;
-import trmega.pcpartpicker.gui.features.GuiMenuBar;
-import trmega.pcpartpicker.gui.features.GuiNavigationBar;
+import trmega.pcpartpicker.gui.feature.GuiMenuBar;
+import trmega.pcpartpicker.gui.feature.GuiNavigationBar;
 
 public class Gui extends JPanel implements Runnable {
 	
 	private Frame frame;
-	
 	private Thread thread = new Thread(this);
-
 	private boolean running;
-	
 	private int width, height;
 	
 	public static int BLOCK;
+			
+	public static final JPanel CPU = new JPanel();
 	
-	boolean test = true;
+	public static JPanel active = CPU;
 	
 	public static JMenuBar MENU_BAR;
 	public static JPanel NAVIGATION_BAR;
@@ -98,7 +97,6 @@ public class Gui extends JPanel implements Runnable {
 		this.running = true;
 		
 		while(running) {
-		    //frame.setBackground(new Color(255, 0, (int)c*5));
 			//repaint();
 			//if(c == 400000) NAVIGATION_BAR.setVisible(false);
 		}

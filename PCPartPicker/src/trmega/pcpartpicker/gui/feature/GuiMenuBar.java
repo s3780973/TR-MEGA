@@ -1,4 +1,4 @@
-package trmega.pcpartpicker.gui.features;
+package trmega.pcpartpicker.gui.feature;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;

@@ -11,13 +11,13 @@ public class Frame extends JFrame {
 		this.setVisible(true);
 		this.setTitle("Database");
 		this.pack();
-		this.setSize(Toolkit.getDefaultToolkit().getScreenSize().width / 2, Toolkit.getDefaultToolkit().getScreenSize().height / 2);
+		this.setSize(550 + Toolkit.getDefaultToolkit().getScreenSize().width / 4, 400 + Toolkit.getDefaultToolkit().getScreenSize().height / 4);
 		this.setResizable(false);
 		
 		new JFrame();
 		
-		Gui screen = new Gui(this);
-		this.add(screen);
+		Gui gui = new Gui(this);
+		this.add(gui);
 	}
 
 }

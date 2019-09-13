@@ -1,8 +1,5 @@
 package trmega.pcpartpicker.main;
 
-import java.awt.Dimension;
-
-import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
 import trmega.pcpartpicker.database.Database;
