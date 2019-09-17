@@ -4,40 +4,41 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.GridLayout;
+import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JEditorPane;
 import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.border.LineBorder;
-import javax.swing.text.Document;
+import javax.swing.SpringLayout;
+import javax.swing.SwingUtilities;
 
 import trmega.pcpartpicker.database.Database;
+import trmega.pcpartpicker.gui.feature.GuiButton;
+import trmega.pcpartpicker.gui.feature.GuiDatabase;
 import trmega.pcpartpicker.gui.feature.GuiMenuBar;
-import trmega.pcpartpicker.gui.feature.GuiNavigationBar;
+import trmega.pcpartpicker.gui.feature.GuiOutput;
 
+@SuppressWarnings("serial")
 public class Gui extends JPanel implements Runnable {
 	
-	private Frame frame;
+	public Frame frame;
 	private Thread thread = new Thread(this);
 	private boolean running;
 	private int width, height;
 	
 	public static int BLOCK;
-			
-	public static final JPanel CPU = new JPanel();
 	
-	public static JPanel active = CPU;
+	public static GuiDatabase CURRENT_DATABASE = GuiDatabase.CPU;
 	
-	public static JMenuBar MENU_BAR;
-	public static JPanel NAVIGATION_BAR;
+	public GuiMenuBar menuBar;
+	public JPanel navigationBar;
+	public static GuiOutput output;
 	
 	public Gui(Frame frame) {
 		this.frame = frame;
@@ -46,61 +47,82 @@ public class Gui extends JPanel implements Runnable {
 		this.height = this.frame.getHeight();
 		BLOCK = this.width / 100;
 		
-		MENU_BAR = new GuiMenuBar();
-		NAVIGATION_BAR = new GuiNavigationBar();
+		menuBar = new GuiMenuBar();
+		navigationBar = new GuiButton(this);
+		output = new GuiOutput();
 		
 		//Creating the MenuBar and adding components
+		menuBar.setTableName(CURRENT_DATABASE);
   
 
         //Creating the panel at bottom and adding components // the panel is not visible in output
+		
+		
+		
         JPanel bottom = new JPanel();
-        JPanel center = new JPanel();
-        JLabel label = new JLabel("Enter Text");
-        /*
-        JTextField tf = new JTextField(17); // accepts upto 10 characters
-        this.add(label); // Components Added using Flow Layout
-        add(label); // Components Added using Flow Layout
-        add(tf);
-        */
         
-        JEditorPane edit = new JEditorPane();
-        edit.setEditable(true);
-        edit.setBorder(new LineBorder(Color.ORANGE, 2));
-        edit.setForeground(Color.BLUE);
-        JScrollPane spEditor = new JScrollPane(edit,
-                JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
-                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        spEditor.setBounds(0, 0, 200, 300); //200 300
-        
-        JButton edit1 = new JButton("Edit");
+        JButton edit1 = new JButton("Save");
+        edit1.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				Database.exportToCSV(Gui.CURRENT_DATABASE);
+			}
+        	
+        });
         bottom.add(edit1);
+        
+        JButton button2 = new JButton("Add Row");
+        button2.addActionListener(new ActionListener() {
 
-        // Text Area at the Center
-        JTextArea ta = new JTextArea();
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				Gui.CURRENT_DATABASE.addRow();
+			}
+        	
+        });
+        bottom.add(button2);
+        
+        JButton button3 = new JButton("Delete Row");
+        button3.addActionListener(new ActionListener() {
 
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				Gui.CURRENT_DATABASE.deleteRow();
+			}
+        	
+        });
+        bottom.add(button3);
+        
         //Adding Components to the frame.
-        frame.getContentPane().add(BorderLayout.WEST, NAVIGATION_BAR);
+        frame.getContentPane().add(BorderLayout.WEST, navigationBar);
         frame.getContentPane().add(BorderLayout.SOUTH, bottom);
-        frame.getContentPane().add(BorderLayout.NORTH, MENU_BAR);
-        frame.getContentPane().add(BorderLayout.EAST, ta);
-        frame.getContentPane().add(BorderLayout.CENTER, spEditor);
-        frame.setVisible(true);
+        frame.getContentPane().add(BorderLayout.NORTH, menuBar);
+        //frame.getContentPane().add(BorderLayout.EAST, output);
+
+        this.switchDatabase(GuiDatabase.CPU);
 		
         thread.start();
 	}
 	
 	@Override
 	public void run() {
-		System.out.println("Starting GUI...");
-		System.out.println(BLOCK);
+		Gui.output.println("Started GUI");
 		
 		this.running = true;
 		
 		while(running) {
+			//run code
 			//repaint();
-			//if(c == 400000) NAVIGATION_BAR.setVisible(false);
 		}
+	}
+	
+	public void switchDatabase(GuiDatabase gui) {
+		//write to CSV when buttons is switched
+		this.frame.remove(Gui.CURRENT_DATABASE);
 		
-		
+		Gui.CURRENT_DATABASE = gui;
+		this.frame.getContentPane().add(BorderLayout.CENTER, CURRENT_DATABASE);
+		frame.setVisible(true);
 	}
 }

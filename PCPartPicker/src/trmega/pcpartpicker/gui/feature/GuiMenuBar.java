@@ -1,34 +1,88 @@
 package trmega.pcpartpicker.gui.feature;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 import trmega.pcpartpicker.database.Database;
 import trmega.pcpartpicker.gui.Gui;
 
-public class GuiMenuBar extends JMenuBar {
+@SuppressWarnings("serial")
+public class GuiMenuBar extends JPanel {
+	
+	private JLabel header = new JLabel();
+	
+	private JMenuBar menu = new JMenuBar();
+	
+	private JMenu file = new JMenu("File");
+    private JMenu help = new JMenu("Help");
+	
+    private JMenuItem save = new JMenuItem();
+	private JMenuItem saveAll = new JMenuItem("Save All Data");
+	private JMenuItem exit = new JMenuItem("Exit");
 	
 	public GuiMenuBar() {
-		JMenuBar mb = new JMenuBar();
-        JMenu m1 = new JMenu("File");
-        JMenu m2 = new JMenu("Help");
-        mb.add(m1);
-        mb.add(m2);
-        JMenuItem m11 = new JMenuItem("Open");
-        JMenuItem m22 = new JMenuItem("Save as");
-        m1.add(m11);
-        m1.add(m22);
+		
+        menu.add(file);
+        menu.add(help);
         
-        this.add(mb);
+        save.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				Gui.output.println("Saving "+Gui.CURRENT_DATABASE.getDatabase().getName()+" data to CSV...");
+				Database.exportToCSV(Gui.CURRENT_DATABASE);
+			}
+        	
+        });
         
-        //this.setLayout(new GridLayout(Database.databases.length, 0)); //rows, coloumns
+        saveAll.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				Gui.output.println("Saving all data to CSV files...");
+				for(int i = 0; i < GuiDatabase.guiDatabases.length; i++) {
+					Database.exportToCSV(GuiDatabase.guiDatabases[i]);
+				}
+			}
+        	
+        });
+        
+        exit.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				System.exit(0);
+			}
+        	
+        });
+        
+        file.add(save);
+        file.add(saveAll);
+        file.add(exit);
+        
+        header.setHorizontalAlignment(SwingConstants.CENTER);
+        
+        this.setLayout(new BorderLayout());
+        
+        this.add(menu, BorderLayout.WEST);
+        this.add(header, BorderLayout.CENTER);
         
         this.setPreferredSize(new Dimension(0, Gui.BLOCK * 3)); //x, y
+	}
+	
+	public void setTableName(GuiDatabase gui) {
+		this.header.setText(gui.getDatabase().getName());
+		
+		this.save.setText("Save [" + gui.getDatabase().getName() + "] Data");
 	}
 
 }
