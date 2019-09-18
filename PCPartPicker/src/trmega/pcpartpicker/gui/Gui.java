@@ -20,7 +20,7 @@ import javax.swing.SwingUtilities;
 
 import trmega.pcpartpicker.database.Database;
 import trmega.pcpartpicker.gui.feature.GuiButton;
-import trmega.pcpartpicker.gui.feature.GuiDatabase;
+import trmega.pcpartpicker.gui.feature.GuiTable;
 import trmega.pcpartpicker.gui.feature.GuiMenuBar;
 import trmega.pcpartpicker.gui.feature.GuiOutput;
 
@@ -34,7 +34,7 @@ public class Gui extends JPanel implements Runnable {
 	
 	public static int BLOCK;
 	
-	public static GuiDatabase CURRENT_DATABASE = GuiDatabase.CPU;
+	public static GuiTable CURRENT_DATABASE = GuiTable.CPU;
 	
 	public GuiMenuBar menuBar;
 	public JPanel navigationBar;
@@ -98,9 +98,13 @@ public class Gui extends JPanel implements Runnable {
         frame.getContentPane().add(BorderLayout.WEST, navigationBar);
         frame.getContentPane().add(BorderLayout.SOUTH, bottom);
         frame.getContentPane().add(BorderLayout.NORTH, menuBar);
-        //frame.getContentPane().add(BorderLayout.EAST, output);
-
-        this.switchDatabase(GuiDatabase.CPU);
+        //frame.getContentPane().add(BorderLayout.EAST, output)
+        
+        for(int i = 0; i < GuiTable.guiDatabases.length; i++) {
+        	this.frame.getContentPane().add(BorderLayout.CENTER, GuiTable.guiDatabases[i]);
+        }
+        
+        //this.switchDatabase(GuiTable.CPU);
 		
         thread.start();
 	}
@@ -111,18 +115,20 @@ public class Gui extends JPanel implements Runnable {
 		
 		this.running = true;
 		
+		this.switchDatabase(GuiTable.CPU);
+		
 		while(running) {
-			//run code
-			//repaint();
+			repaint();
 		}
 	}
 	
-	public void switchDatabase(GuiDatabase gui) {
+	public void switchDatabase(GuiTable gui) {
 		//write to CSV when buttons is switched
-		this.frame.remove(Gui.CURRENT_DATABASE);
+		this.frame.getContentPane().remove(Gui.CURRENT_DATABASE);
 		
 		Gui.CURRENT_DATABASE = gui;
 		this.frame.getContentPane().add(BorderLayout.CENTER, CURRENT_DATABASE);
-		frame.setVisible(true);
+		revalidate();
+		//frame.setVisible(true);
 	}
 }

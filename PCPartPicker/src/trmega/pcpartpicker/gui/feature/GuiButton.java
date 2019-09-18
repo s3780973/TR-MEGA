@@ -36,8 +36,8 @@ public class GuiButton extends JPanel {
 		button.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				gui.switchDatabase(GuiDatabase.guiDatabases[index]);
-				gui.menuBar.setTableName(GuiDatabase.guiDatabases[index]);
+				gui.switchDatabase(GuiTable.guiDatabases[index]);
+				gui.menuBar.setTableName(GuiTable.guiDatabases[index]);
 			}
 		});
 		this.add(button);

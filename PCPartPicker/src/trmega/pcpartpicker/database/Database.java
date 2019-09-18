@@ -11,7 +11,7 @@ import java.util.List;
 import javax.swing.table.TableModel;
 
 import trmega.pcpartpicker.directory.Directory;
-import trmega.pcpartpicker.gui.feature.GuiDatabase;
+import trmega.pcpartpicker.gui.feature.GuiTable;
 
 import com.opencsv.CSVWriter;
 
@@ -178,7 +178,7 @@ public class Database {
 	/**
 	 * Export data from table to a designated file path via the GUI
 	 */
-	public static boolean exportToCSV(GuiDatabase guiDatabase) {
+	public static boolean exportToCSV(GuiTable guiDatabase) {
 
 	    try {
 

@@ -49,8 +49,8 @@ public class GuiMenuBar extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				Gui.output.println("Saving all data to CSV files...");
-				for(int i = 0; i < GuiDatabase.guiDatabases.length; i++) {
-					Database.exportToCSV(GuiDatabase.guiDatabases[i]);
+				for(int i = 0; i < GuiTable.guiDatabases.length; i++) {
+					Database.exportToCSV(GuiTable.guiDatabases[i]);
 				}
 			}
         	
@@ -79,7 +79,7 @@ public class GuiMenuBar extends JPanel {
         this.setPreferredSize(new Dimension(0, Gui.BLOCK * 3)); //x, y
 	}
 	
-	public void setTableName(GuiDatabase gui) {
+	public void setTableName(GuiTable gui) {
 		this.header.setText(gui.getDatabase().getName());
 		
 		this.save.setText("Save [" + gui.getDatabase().getName() + "] Data");
