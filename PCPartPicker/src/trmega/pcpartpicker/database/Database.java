@@ -175,15 +175,19 @@ public class Database {
 		}
 	}
 	
+	public static void exportToCSV(GuiTable guiDatabase) {
+		exportToCSV(guiDatabase, guiDatabase.getDatabase().getFile());
+	}
+	
 	/**
 	 * Export data from table to a designated file path via the GUI
 	 */
-	public static boolean exportToCSV(GuiTable guiDatabase) {
+	public static boolean exportToCSV(GuiTable guiDatabase, File file) {
 
 	    try {
 
 	        TableModel model = guiDatabase.getTable().getModel();
-	        FileWriter csv = new FileWriter(guiDatabase.getDatabase().getFile());
+	        FileWriter csv = new FileWriter(file);
 
 	        /*
 	        for (int i = 0; i < model.getColumnCount(); i++) {

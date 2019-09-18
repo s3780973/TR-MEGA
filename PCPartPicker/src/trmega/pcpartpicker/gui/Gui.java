@@ -94,12 +94,15 @@ public class Gui extends JPanel implements Runnable {
         });
         bottom.add(button3);
         
+        //menuBar.setBackground(Color.DARK_GRAY);
+        
         //Adding Components to the frame.
         frame.getContentPane().add(BorderLayout.WEST, navigationBar);
         frame.getContentPane().add(BorderLayout.SOUTH, bottom);
         frame.getContentPane().add(BorderLayout.NORTH, menuBar);
-        //frame.getContentPane().add(BorderLayout.EAST, output)
+        //frame.getContentPane().add(BorderLayout.EAST, output);
         
+        //Add tables
         for(int i = 0; i < GuiTable.guiDatabases.length; i++) {
         	this.frame.getContentPane().add(BorderLayout.CENTER, GuiTable.guiDatabases[i]);
         }
@@ -125,10 +128,7 @@ public class Gui extends JPanel implements Runnable {
 	public void switchDatabase(GuiTable gui) {
 		//write to CSV when buttons is switched
 		this.frame.getContentPane().remove(Gui.CURRENT_DATABASE);
-		
 		Gui.CURRENT_DATABASE = gui;
 		this.frame.getContentPane().add(BorderLayout.CENTER, CURRENT_DATABASE);
-		revalidate();
-		//frame.setVisible(true);
 	}
 }

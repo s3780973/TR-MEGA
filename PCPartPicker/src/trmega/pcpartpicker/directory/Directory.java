@@ -22,5 +22,9 @@ public interface Directory {
 	
 	public static final File USER = new File("database/userdata/user.csv");
 	public static final File USER_TRANSACTIONS = new File("database/userdata/user_transactions.csv");
+	
+	//<--------------------------------- BUILD FILES ------------------------------------>
+	
+	public static final File STOCK = new File("database/stock.csv");
 
 }

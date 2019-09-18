@@ -9,10 +9,12 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import trmega.pcpartpicker.database.Database;
+import trmega.pcpartpicker.directory.Directory;
 import trmega.pcpartpicker.gui.Gui;
 
 @SuppressWarnings("serial")
@@ -24,15 +26,19 @@ public class GuiMenuBar extends JPanel {
 	
 	private JMenu file = new JMenu("File");
     private JMenu help = new JMenu("Help");
+    private JMenu build = new JMenu("Build");
 	
     private JMenuItem save = new JMenuItem();
 	private JMenuItem saveAll = new JMenuItem("Save All Data");
 	private JMenuItem exit = new JMenuItem("Exit");
 	
+	private JMenuItem buildStock = new JMenuItem("Stock Data");
+	
 	public GuiMenuBar() {
 		
         menu.add(file);
         menu.add(help);
+        menu.add(build);
         
         save.addActionListener(new ActionListener() {
 
@@ -65,9 +71,23 @@ public class GuiMenuBar extends JPanel {
         	
         });
         
+        buildStock.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				int build = JOptionPane.showConfirmDialog(null, "Build Stock Data?");
+				
+				//add functionality here
+				
+			}
+        	
+        });
+        
         file.add(save);
         file.add(saveAll);
         file.add(exit);
+        
+        build.add(buildStock);
         
         header.setHorizontalAlignment(SwingConstants.CENTER);
         
