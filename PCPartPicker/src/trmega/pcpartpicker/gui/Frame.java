@@ -15,8 +15,6 @@ public class Frame extends JFrame {
 		this.setSize(750 + Toolkit.getDefaultToolkit().getScreenSize().width / 4, 400 + Toolkit.getDefaultToolkit().getScreenSize().height / 4);
 		this.setResizable(false);
 		
-		new JFrame();
-		
 		Gui gui = new Gui(this);
 		this.add(gui);
 	}

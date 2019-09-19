@@ -30,6 +30,8 @@ public class GuiMenuBar extends JPanel {
 	
     private JMenuItem save = new JMenuItem();
 	private JMenuItem saveAll = new JMenuItem("Save All Data");
+	private JMenuItem wipe = new JMenuItem();
+	private JMenuItem wipeAll = new JMenuItem("Wipe All Data");
 	private JMenuItem exit = new JMenuItem("Exit");
 	
 	private JMenuItem buildStock = new JMenuItem("Stock Data");
@@ -55,9 +57,20 @@ public class GuiMenuBar extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				Gui.output.println("Saving all data to CSV files...");
-				for(int i = 0; i < GuiTable.guiDatabases.length; i++) {
-					Database.exportToCSV(GuiTable.guiDatabases[i]);
+				for(int i = 0; i < GuiTable.tables.length; i++) {
+					Database.exportToCSV(GuiTable.tables[i]);
 				}
+			}
+        	
+        });
+        
+        wipe.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete all " + header.getText() + " data?");
+				
+				if(confirm == 0) Gui.CURRENT_DATABASE.wipe();
 			}
         	
         });
@@ -85,6 +98,8 @@ public class GuiMenuBar extends JPanel {
         
         file.add(save);
         file.add(saveAll);
+        file.add(wipe);
+        file.add(wipeAll);
         file.add(exit);
         
         build.add(buildStock);
@@ -103,6 +118,7 @@ public class GuiMenuBar extends JPanel {
 		this.header.setText(gui.getDatabase().getName());
 		
 		this.save.setText("Save [" + gui.getDatabase().getName() + "] Data");
+		this.wipe.setText("Delete [" + gui.getDatabase().getName() + "] Data");
 	}
 
 }

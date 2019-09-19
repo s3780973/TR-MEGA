@@ -15,6 +15,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 import trmega.pcpartpicker.database.Database;
 
@@ -37,7 +38,7 @@ public class GuiTable extends JPanel {
 	public static GuiTable USER = new GuiTable(Database.USER);
 	public static GuiTable USER_TRANSACTIONS = new GuiTable(Database.USER_TRANSACTIONS);
 	
-	public static GuiTable[] guiDatabases = new GuiTable[] {CPU, GPU, MB, RAM, CPU_COOLING, CASE, CASE_COOLING, PSU, STORAGE, OS,
+	public static GuiTable[] tables = new GuiTable[] {CPU, GPU, MB, RAM, CPU_COOLING, CASE, CASE_COOLING, PSU, STORAGE, OS,
 		ORDER, ORDER_DETAILS, COMPATABILITY_LISTS, USER, USER_TRANSACTIONS};
 	
 	/** The Database that is associated with the table GUI */
@@ -45,6 +46,8 @@ public class GuiTable extends JPanel {
 	
 	/** The table of the Database GUI */
 	private JTable table;
+	
+	private DefaultTableModel tableModel;
 	
 	public GuiTable(Database database) {
 		super(new BorderLayout());
@@ -70,8 +73,8 @@ public class GuiTable extends JPanel {
 	    table.setRowHeight(23);
 	    table.setBackground(new Color(250, 250, 250));
 	    
+	    this.tableModel = (DefaultTableModel) table.getModel();
 	    this.add(sp, BorderLayout.CENTER);
-		this.setVisible(true);
 	}
 	
 	private static Object[][] readCSV(File file) throws IOException {
@@ -87,23 +90,28 @@ public class GuiTable extends JPanel {
 	
 	/** Add a row to the table */
 	public void addRow() {
-		DefaultTableModel model = (DefaultTableModel) table.getModel();
-	    model.addRow(new Object[] {});
+	    tableModel.addRow(new Object[] {});
 	}
 	
 	public void deleteRow() {
 		int[] rows = table.getSelectedRows();
 	    //int colIndex = table.getSelectedColumn();
-	      
-	    DefaultTableModel model = (DefaultTableModel) table.getModel();
 		
 	    try {
 	    	for(int i = rows.length-1; i >= 0; i--) {
-	    		model.removeRow(rows[i]);
+	    		tableModel.removeRow(rows[i]);
 	    	}
 	    } catch(Exception e) {
 	    	System.out.println("No row selected to delete!");
 	    }
+	}
+	
+	public void wipe() {
+		int rowCount = table.getRowCount();
+		
+		for(int i = rowCount-1; i >= 0; i--) {
+			tableModel.removeRow(i);
+		}
 	}
 	
 	/** Return the table being used by the GUI */
