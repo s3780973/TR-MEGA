@@ -16,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.SpringLayout;
+import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
 import trmega.pcpartpicker.database.Database;
@@ -39,6 +40,8 @@ public class Gui extends JPanel implements Runnable {
 	public GuiMenuBar menuBar;
 	public JPanel navigationBar;
 	public static GuiOutput output;
+	
+	private JButton b;
 	
 	public Gui(Frame frame) {
 		this.frame = frame;
@@ -84,6 +87,8 @@ public class Gui extends JPanel implements Runnable {
         bottom.add(button2);
         
         JButton button3 = new JButton("Delete Row");
+        b = button3;
+
         button3.addActionListener(new ActionListener() {
 
 			@Override
@@ -120,6 +125,10 @@ public class Gui extends JPanel implements Runnable {
 		
 		while(running) {
 			repaint();
+			
+			if(Gui.CURRENT_DATABASE.getTable().getSelectedRow() >= 0) {
+				b.setEnabled(true);
+			} else b.setEnabled(false);
 		}
 	}
 	

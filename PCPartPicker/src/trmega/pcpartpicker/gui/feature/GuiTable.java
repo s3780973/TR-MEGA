@@ -68,6 +68,8 @@ public class GuiTable extends JPanel {
 		sp.getVerticalScrollBar().setPreferredSize(new Dimension(20, Integer.MAX_VALUE));
 		sp.getHorizontalScrollBar().setPreferredSize(new Dimension(Integer.MAX_VALUE, 20));
 		sp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS); 
+		sp.getViewport().setBackground(Color.BLACK);
+		//table.setFillsViewportHeight(true);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		table.setSelectionBackground(new Color(80, 255, 240, 70));
 	    table.setRowHeight(23);

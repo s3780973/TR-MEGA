@@ -1,6 +1,7 @@
 package trmega.pcpartpicker.gui.feature;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -33,12 +34,11 @@ public class GuiMenuBar extends JPanel {
 	private JMenuItem exit = new JMenuItem("Exit");
 	
 	private JMenuItem wipe = new JMenuItem();
-	private JMenuItem wipeAll = new JMenuItem("Wipe All Data");
+	private JMenuItem wipeAll = new JMenuItem("Delete All Data");
 	
 	private JMenuItem buildStock = new JMenuItem("Stock Data");
 	
-	public GuiMenuBar() {
-		
+	public GuiMenuBar() {	
         menu.add(file);
         menu.add(edit);
         menu.add(build);
@@ -71,7 +71,7 @@ public class GuiMenuBar extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete all " + header.getText() + " data?");
 				
-				if(confirm == 0) Gui.CURRENT_DATABASE.wipe();
+				if(confirm == JOptionPane.YES_OPTION) Gui.CURRENT_DATABASE.wipe();
 			}
         	
         });
@@ -82,7 +82,7 @@ public class GuiMenuBar extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
                 int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete ALL data? (Every database will be deleted!)");
 				
-				if(confirm == 0) {
+				if(confirm == JOptionPane.YES_OPTION) {
 					for(int i = 0; i < GuiTable.tables.length; i++) {
 						GuiTable.tables[i].wipe();
 					}
