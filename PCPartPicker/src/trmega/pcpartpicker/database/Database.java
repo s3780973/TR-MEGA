@@ -51,7 +51,9 @@ public class Database {
 	 */
 	private String primaryKey;
 	
-	/** Checks whether to wipe a CSV when calling the delete method */
+	/** Checks whether to wipe a CSV when calling the delete method
+	 * @deprecated wiping done through GUI
+	 */
 	private boolean wipe;
 	
 	/** Array of parameters to write to File
@@ -98,6 +100,7 @@ public class Database {
 	
 	/**
 	 * Universal method to wipe an entire CSV, called by child class
+	 * @deprecated wiping done through GUI
 	 */
 	public void wipeCSV() {
 		this.wipe = true;
@@ -106,6 +109,7 @@ public class Database {
 	
 	/**
 	 * Wipe all CSV files to their default state
+	 * @deprecated wiping done through GUI
 	 */
 	public static void wipeAll() {
 		for(int i = 0; i < databases.length; i++) {
@@ -138,6 +142,10 @@ public class Database {
 		}
 	}
 	
+	/**
+	 * Delete selected params via primary key
+	 * @deprecated deleting done through GUI table
+	 */
 	protected void delete() {
 		try {
 

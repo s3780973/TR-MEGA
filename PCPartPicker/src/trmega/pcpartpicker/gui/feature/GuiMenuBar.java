@@ -25,21 +25,22 @@ public class GuiMenuBar extends JPanel {
 	private JMenuBar menu = new JMenuBar();
 	
 	private JMenu file = new JMenu("File");
-    private JMenu help = new JMenu("Help");
+    private JMenu edit = new JMenu("Edit");
     private JMenu build = new JMenu("Build");
 	
     private JMenuItem save = new JMenuItem();
 	private JMenuItem saveAll = new JMenuItem("Save All Data");
+	private JMenuItem exit = new JMenuItem("Exit");
+	
 	private JMenuItem wipe = new JMenuItem();
 	private JMenuItem wipeAll = new JMenuItem("Wipe All Data");
-	private JMenuItem exit = new JMenuItem("Exit");
 	
 	private JMenuItem buildStock = new JMenuItem("Stock Data");
 	
 	public GuiMenuBar() {
 		
         menu.add(file);
-        menu.add(help);
+        menu.add(edit);
         menu.add(build);
         
         save.addActionListener(new ActionListener() {
@@ -75,11 +76,38 @@ public class GuiMenuBar extends JPanel {
         	
         });
         
+        wipeAll.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+                int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete ALL data? (Every database will be deleted!)");
+				
+				if(confirm == 0) {
+					for(int i = 0; i < GuiTable.tables.length; i++) {
+						GuiTable.tables[i].wipe();
+					}
+				}
+				
+			}
+        	
+        });
+        
         exit.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				System.exit(0);
+				int confirm = JOptionPane.showConfirmDialog(null, "Do you want to save all databases?");
+				
+				if(confirm != JOptionPane.CANCEL_OPTION) {
+					if(confirm == JOptionPane.YES_OPTION) {
+						for(int i = 0; i < GuiTable.tables.length; i++) {
+							Database.exportToCSV(GuiTable.tables[i]);
+						}
+						
+					}
+					
+					System.exit(0);
+				}
 			}
         	
         });
@@ -98,9 +126,10 @@ public class GuiMenuBar extends JPanel {
         
         file.add(save);
         file.add(saveAll);
-        file.add(wipe);
-        file.add(wipeAll);
         file.add(exit);
+        
+        edit.add(wipe);
+        edit.add(wipeAll);
         
         build.add(buildStock);
         

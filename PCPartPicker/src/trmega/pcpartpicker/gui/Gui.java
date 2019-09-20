@@ -100,7 +100,7 @@ public class Gui extends JPanel implements Runnable {
         frame.getContentPane().add(BorderLayout.WEST, navigationBar);
         frame.getContentPane().add(BorderLayout.SOUTH, bottom);
         frame.getContentPane().add(BorderLayout.NORTH, menuBar);
-        frame.getContentPane().add(BorderLayout.EAST, output);
+        //frame.getContentPane().add(BorderLayout.EAST, output);
         
         //Add tables
         for(int i = 0; i < GuiTable.tables.length; i++) {
