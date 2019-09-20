@@ -6,9 +6,9 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import trmega.pcpartpicker.database.Database;
 import trmega.pcpartpicker.gui.Gui;
 
+@SuppressWarnings("serial")
 public class GuiBottomPanel extends JPanel {
 	
 	private boolean rowSelected = false;
@@ -24,7 +24,7 @@ public class GuiBottomPanel extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				Gui.CURRENT_DATABASE.addRow();
+				Gui.getGui().currentDatabase.addRow();
 			}
         	
         });
@@ -33,7 +33,7 @@ public class GuiBottomPanel extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				Gui.CURRENT_DATABASE.deleteRow();
+				Gui.getGui().currentDatabase.deleteRow();
 			}
         	
         });
@@ -42,7 +42,7 @@ public class GuiBottomPanel extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				Gui.CURRENT_DATABASE.moveRowUp();
+				Gui.getGui().currentDatabase.moveRowUp();
 			}
         	
         });
@@ -51,7 +51,7 @@ public class GuiBottomPanel extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Gui.CURRENT_DATABASE.moveRowDown();	
+				Gui.getGui().currentDatabase.moveRowDown();	
 			}
         	
         });
@@ -63,7 +63,7 @@ public class GuiBottomPanel extends JPanel {
 	}
 	
 	public void update() {
-		this.rowSelected = Gui.CURRENT_DATABASE.getTable().getSelectedRow() >= 0 ? true : false;
+		this.rowSelected = Gui.getGui().currentDatabase.getTable().getSelectedRow() >= 0 ? true : false;
 		
 		if(this.rowSelected) {
 			this.deleteRow.setEnabled(true);

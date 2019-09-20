@@ -13,32 +13,29 @@ import java.util.List;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
-
 import trmega.pcpartpicker.database.Database;
 
 @SuppressWarnings("serial")
-public class GuiTable extends JPanel {
+public class GuiDatabase extends JPanel {
 	
-	public static GuiTable CPU = new GuiTable(Database.CPU);
-	public static GuiTable GPU = new GuiTable(Database.GPU);
-	public static GuiTable MB = new GuiTable(Database.MB);
-	public static GuiTable RAM = new GuiTable(Database.RAM);
-	public static GuiTable CPU_COOLING = new GuiTable(Database.CPU_COOLING);
-	public static GuiTable CASE = new GuiTable(Database.CASE);
-	public static GuiTable CASE_COOLING = new GuiTable(Database.CASE_COOLING);
-	public static GuiTable PSU = new GuiTable(Database.PSU);
-	public static GuiTable STORAGE = new GuiTable(Database.STORAGE);
-	public static GuiTable OS = new GuiTable(Database.OS);
-	public static GuiTable ORDER = new GuiTable(Database.ORDER);
-	public static GuiTable ORDER_DETAILS = new GuiTable(Database.ORDER_DETAILS);
-	public static GuiTable COMPATABILITY_LISTS = new GuiTable(Database.COMPATABILITY_LISTS);
-	public static GuiTable USER = new GuiTable(Database.USER);
-	public static GuiTable USER_TRANSACTIONS = new GuiTable(Database.USER_TRANSACTIONS);
+	public static GuiDatabase CPU = new GuiDatabase(Database.CPU);
+	public static GuiDatabase GPU = new GuiDatabase(Database.GPU);
+	public static GuiDatabase MB = new GuiDatabase(Database.MB);
+	public static GuiDatabase RAM = new GuiDatabase(Database.RAM);
+	public static GuiDatabase CPU_COOLING = new GuiDatabase(Database.CPU_COOLING);
+	public static GuiDatabase CASE = new GuiDatabase(Database.CASE);
+	public static GuiDatabase CASE_COOLING = new GuiDatabase(Database.CASE_COOLING);
+	public static GuiDatabase PSU = new GuiDatabase(Database.PSU);
+	public static GuiDatabase STORAGE = new GuiDatabase(Database.STORAGE);
+	public static GuiDatabase OS = new GuiDatabase(Database.OS);
+	public static GuiDatabase ORDER = new GuiDatabase(Database.ORDER);
+	public static GuiDatabase ORDER_DETAILS = new GuiDatabase(Database.ORDER_DETAILS);
+	public static GuiDatabase COMPATABILITY_LISTS = new GuiDatabase(Database.COMPATABILITY_LISTS);
+	public static GuiDatabase USER = new GuiDatabase(Database.USER);
+	public static GuiDatabase USER_TRANSACTIONS = new GuiDatabase(Database.USER_TRANSACTIONS);
 	
-	public static GuiTable[] tables = new GuiTable[] {CPU, GPU, MB, RAM, CPU_COOLING, CASE, CASE_COOLING, PSU, STORAGE, OS,
+	public static GuiDatabase[] tables = new GuiDatabase[] {CPU, GPU, MB, RAM, CPU_COOLING, CASE, CASE_COOLING, PSU, STORAGE, OS,
 		ORDER, ORDER_DETAILS, COMPATABILITY_LISTS, USER, USER_TRANSACTIONS};
 	
 	/** The Database that is associated with the table GUI */
@@ -49,7 +46,7 @@ public class GuiTable extends JPanel {
 	
 	private DefaultTableModel tableModel;
 	
-	public GuiTable(Database database) {
+	public GuiDatabase(Database database) {
 		super(new BorderLayout());
 		
 		this.database = database;

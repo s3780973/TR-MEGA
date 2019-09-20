@@ -1,29 +1,11 @@
 package trmega.pcpartpicker.gui;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridBagLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
-import javax.swing.SpringLayout;
-import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
-
-import trmega.pcpartpicker.database.Database;
 import trmega.pcpartpicker.gui.feature.GuiBottomPanel;
-import trmega.pcpartpicker.gui.feature.GuiButton;
-import trmega.pcpartpicker.gui.feature.GuiTable;
-import trmega.pcpartpicker.gui.feature.GuiMenuBar;
+import trmega.pcpartpicker.gui.feature.GuiButtonPanel;
+import trmega.pcpartpicker.gui.feature.GuiDatabase;
+import trmega.pcpartpicker.gui.feature.GuiTopPanel;
 import trmega.pcpartpicker.gui.feature.GuiOutput;
 
 @SuppressWarnings("serial")
@@ -36,44 +18,29 @@ public class Gui extends JPanel implements Runnable {
 	
 	private Thread thread = new Thread(this);
 	private boolean running;
-	private int width, height;
+	private int width;
 	
 	public static int BLOCK;
 	
-	public static GuiTable CURRENT_DATABASE = GuiTable.CPU;
+	public GuiDatabase currentDatabase = GuiDatabase.CPU;
 	
-	public GuiMenuBar menuBar;
+	public GuiTopPanel menuBar;
 	public JPanel navigationBar;
 	public static GuiOutput output;
 	public GuiBottomPanel bottomPanel;
-	
-	private JButton b;
 	
 	public Gui(Frame frame) {
 		this.frame = frame;
 		
 		this.width = this.frame.getWidth();
-		this.height = this.frame.getHeight();
 		BLOCK = this.width / 100;
 		
-		menuBar = new GuiMenuBar();
-		navigationBar = new GuiButton(this);
+		menuBar = new GuiTopPanel();
+		navigationBar = new GuiButtonPanel(this);
 		output = new GuiOutput();
 		bottomPanel = new GuiBottomPanel();
 		
 		//Creating the MenuBar and adding components
-		menuBar.setTableName(CURRENT_DATABASE);
-  
-
-        //Creating the panel at bottom and adding components // the panel is not visible in output
-		
-		
-		
-        JPanel bottom = new JPanel();
-        
-        
-        
-        //menuBar.setBackground(Color.DARK_GRAY);
         
         //Adding Components to the frame.
         frame.getContentPane().add(BorderLayout.WEST, navigationBar);
@@ -82,8 +49,8 @@ public class Gui extends JPanel implements Runnable {
         //frame.getContentPane().add(BorderLayout.EAST, output);
         
         //Add tables
-        for(int i = 0; i < GuiTable.tables.length; i++) {
-        	this.frame.getContentPane().add(BorderLayout.CENTER, GuiTable.tables[i]);
+        for(int i = 0; i < GuiDatabase.tables.length; i++) {
+        	this.frame.getContentPane().add(BorderLayout.CENTER, GuiDatabase.tables[i]);
         }
 		
         thread.start();
@@ -95,7 +62,9 @@ public class Gui extends JPanel implements Runnable {
 		
 		this.running = true;
 		
-		this.switchDatabase(GuiTable.CPU);
+		menuBar.setTableName(currentDatabase);
+		this.switchDatabase(GuiDatabase.CPU);
+		
 		
 		while(running) {
 			repaint();
@@ -104,10 +73,15 @@ public class Gui extends JPanel implements Runnable {
 		}
 	}
 	
-	public void switchDatabase(GuiTable gui) {
+	/** Get the instance of the GUI */
+	public static Gui getGui() {
+		return gui;
+	}
+	
+	public void switchDatabase(GuiDatabase gui) {
 		//write to CSV when buttons is switched
-		this.frame.getContentPane().remove(Gui.CURRENT_DATABASE);
-		Gui.CURRENT_DATABASE = gui;
-		this.frame.getContentPane().add(BorderLayout.CENTER, CURRENT_DATABASE);
+		this.frame.getContentPane().remove(this.currentDatabase);
+		this.currentDatabase = gui;
+		this.frame.getContentPane().add(BorderLayout.CENTER, currentDatabase);
 	}
 }

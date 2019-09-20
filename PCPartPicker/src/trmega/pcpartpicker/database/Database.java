@@ -11,7 +11,7 @@ import java.util.List;
 import javax.swing.table.TableModel;
 
 import trmega.pcpartpicker.directory.Directory;
-import trmega.pcpartpicker.gui.feature.GuiTable;
+import trmega.pcpartpicker.gui.feature.GuiDatabase;
 
 import com.opencsv.CSVWriter;
 
@@ -34,7 +34,7 @@ public class Database {
 	public static final Database COMPATABILITY_LISTS = new Database("Compatability Lists", Directory.COMPATABILITY_LISTS, new String[] {"CPU Product Code", "MB Product Code", "RAM Product Code"});
 	
 	public static final Database USER = new Database("User", Directory.USER, new String[] {"Username", "Email", "Newsletter Subscriber"});
-	public static final Database USER_TRANSACTIONS = new Database("User Transactions", Directory.USER_TRANSACTIONS, new String[] {"Username", "Past Transactions"});
+	public static final Database USER_TRANSACTIONS = new Database("User Transactions", Directory.USER_TRANSACTIONS, new String[] {"Username", "Past Transaction"});
 	
 	/** List of databases an array */
 	public static final Database[] databases = new Database[] {CPU, GPU, MB, RAM, CPU_COOLING, CASE, CASE_COOLING, PSU, STORAGE, OS, ORDER, ORDER_DETAILS, COMPATABILITY_LISTS, USER, USER_TRANSACTIONS};
@@ -183,14 +183,14 @@ public class Database {
 		}
 	}
 	
-	public static void exportToCSV(GuiTable guiDatabase) {
+	public static void exportToCSV(GuiDatabase guiDatabase) {
 		exportToCSV(guiDatabase, guiDatabase.getDatabase().getFile());
 	}
 	
 	/**
 	 * Export data from table to a designated file path via the GUI
 	 */
-	public static boolean exportToCSV(GuiTable guiDatabase, File file) {
+	public static boolean exportToCSV(GuiDatabase guiDatabase, File file) {
 
 	    try {
 

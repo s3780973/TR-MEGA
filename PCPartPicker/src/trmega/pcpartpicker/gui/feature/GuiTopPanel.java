@@ -1,7 +1,6 @@
 package trmega.pcpartpicker.gui.feature;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,11 +14,10 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import trmega.pcpartpicker.database.Database;
-import trmega.pcpartpicker.directory.Directory;
 import trmega.pcpartpicker.gui.Gui;
 
 @SuppressWarnings("serial")
-public class GuiMenuBar extends JPanel {
+public class GuiTopPanel extends JPanel {
 	
 	private JLabel header = new JLabel();
 	
@@ -38,7 +36,7 @@ public class GuiMenuBar extends JPanel {
 	
 	private JMenuItem buildStock = new JMenuItem("Stock Data");
 	
-	public GuiMenuBar() {	
+	public GuiTopPanel() {	
         menu.add(file);
         menu.add(edit);
         menu.add(build);
@@ -47,8 +45,8 @@ public class GuiMenuBar extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				Gui.output.println("Saving "+Gui.CURRENT_DATABASE.getDatabase().getName()+" data to CSV...");
-				Database.exportToCSV(Gui.CURRENT_DATABASE);
+				Gui.output.println("Saving " + Gui.getGui().currentDatabase.getDatabase().getName() + " data to CSV...");
+				Database.exportToCSV(Gui.getGui().currentDatabase);
 			}
         	
         });
@@ -58,8 +56,8 @@ public class GuiMenuBar extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				Gui.output.println("Saving all data to CSV files...");
-				for(int i = 0; i < GuiTable.tables.length; i++) {
-					Database.exportToCSV(GuiTable.tables[i]);
+				for(int i = 0; i < GuiDatabase.tables.length; i++) {
+					Database.exportToCSV(GuiDatabase.tables[i]);
 				}
 			}
         	
@@ -71,7 +69,7 @@ public class GuiMenuBar extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete all " + header.getText() + " data?");
 				
-				if(confirm == JOptionPane.YES_OPTION) Gui.CURRENT_DATABASE.wipe();
+				if(confirm == JOptionPane.YES_OPTION) Gui.getGui().currentDatabase.wipe();
 			}
         	
         });
@@ -83,8 +81,8 @@ public class GuiMenuBar extends JPanel {
                 int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete ALL data? (Every database will be deleted!)");
 				
 				if(confirm == JOptionPane.YES_OPTION) {
-					for(int i = 0; i < GuiTable.tables.length; i++) {
-						GuiTable.tables[i].wipe();
+					for(int i = 0; i < GuiDatabase.tables.length; i++) {
+						GuiDatabase.tables[i].wipe();
 					}
 				}
 				
@@ -100,26 +98,14 @@ public class GuiMenuBar extends JPanel {
 				
 				if(confirm != JOptionPane.CANCEL_OPTION) {
 					if(confirm == JOptionPane.YES_OPTION) {
-						for(int i = 0; i < GuiTable.tables.length; i++) {
-							Database.exportToCSV(GuiTable.tables[i]);
+						for(int i = 0; i < GuiDatabase.tables.length; i++) {
+							Database.exportToCSV(GuiDatabase.tables[i]);
 						}
 						
 					}
 					
 					System.exit(0);
 				}
-			}
-        	
-        });
-        
-        buildStock.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				int build = JOptionPane.showConfirmDialog(null, "Build Stock Data?");
-				
-				//add functionality here
-				
 			}
         	
         });
@@ -143,7 +129,7 @@ public class GuiMenuBar extends JPanel {
         this.setPreferredSize(new Dimension(0, Gui.BLOCK * 3)); //x, y
 	}
 	
-	public void setTableName(GuiTable gui) {
+	public void setTableName(GuiDatabase gui) {
 		this.header.setText(gui.getDatabase().getName());
 		
 		this.save.setText("Save [" + gui.getDatabase().getName() + "] Data");

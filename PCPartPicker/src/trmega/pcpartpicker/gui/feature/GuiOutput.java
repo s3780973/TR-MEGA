@@ -9,6 +9,7 @@ import javax.swing.JTextArea;
 
 import trmega.pcpartpicker.gui.Gui;
 
+@SuppressWarnings("serial")
 public class GuiOutput extends JPanel {
 	
 	private JTextArea output = new JTextArea(Gui.BLOCK * 13, 13);

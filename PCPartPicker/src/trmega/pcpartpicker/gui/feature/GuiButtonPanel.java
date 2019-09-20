@@ -1,6 +1,5 @@
 package trmega.pcpartpicker.gui.feature;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -10,17 +9,12 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import trmega.pcpartpicker.database.Database;
-import trmega.pcpartpicker.gui.Frame;
 import trmega.pcpartpicker.gui.Gui;
 
 @SuppressWarnings("serial")
-public class GuiButton extends JPanel {
+public class GuiButtonPanel extends JPanel {
 	
-	private Gui gui;
-	
-	public GuiButton(Gui gui) {
-		this.gui = gui;
-		
+	public GuiButtonPanel(Gui gui) {	
 		for(int i = 0; i < Database.databases.length; i++) {
 			this.createButton(i);
 		}
@@ -37,10 +31,11 @@ public class GuiButton extends JPanel {
 		button.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Gui.gui.switchDatabase(GuiTable.tables[index]);
-				Gui.gui.menuBar.setTableName(GuiTable.tables[index]);
+				Gui.getGui().switchDatabase(GuiDatabase.tables[index]);
+				Gui.getGui().menuBar.setTableName(GuiDatabase.tables[index]);
 			}
 		});
+		
 		this.add(button);
 		return button;
 	}
