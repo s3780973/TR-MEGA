@@ -20,6 +20,7 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
 import trmega.pcpartpicker.database.Database;
+import trmega.pcpartpicker.gui.feature.GuiBottomPanel;
 import trmega.pcpartpicker.gui.feature.GuiButton;
 import trmega.pcpartpicker.gui.feature.GuiTable;
 import trmega.pcpartpicker.gui.feature.GuiMenuBar;
@@ -29,6 +30,10 @@ import trmega.pcpartpicker.gui.feature.GuiOutput;
 public class Gui extends JPanel implements Runnable {
 	
 	public Frame frame;
+	
+	/** Instance of the GUI */
+	public static Gui gui;
+	
 	private Thread thread = new Thread(this);
 	private boolean running;
 	private int width, height;
@@ -40,6 +45,7 @@ public class Gui extends JPanel implements Runnable {
 	public GuiMenuBar menuBar;
 	public JPanel navigationBar;
 	public static GuiOutput output;
+	public GuiBottomPanel bottomPanel;
 	
 	private JButton b;
 	
@@ -53,6 +59,7 @@ public class Gui extends JPanel implements Runnable {
 		menuBar = new GuiMenuBar();
 		navigationBar = new GuiButton(this);
 		output = new GuiOutput();
+		bottomPanel = new GuiBottomPanel();
 		
 		//Creating the MenuBar and adding components
 		menuBar.setTableName(CURRENT_DATABASE);
@@ -64,46 +71,13 @@ public class Gui extends JPanel implements Runnable {
 		
         JPanel bottom = new JPanel();
         
-        JButton edit1 = new JButton("Save");
-        edit1.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				Database.exportToCSV(Gui.CURRENT_DATABASE);
-			}
-        	
-        });
-        bottom.add(edit1);
         
-        JButton button2 = new JButton("Add Row");
-        button2.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				Gui.CURRENT_DATABASE.addRow();
-			}
-        	
-        });
-        bottom.add(button2);
-        
-        JButton button3 = new JButton("Delete Row");
-        b = button3;
-
-        button3.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				Gui.CURRENT_DATABASE.deleteRow();
-			}
-        	
-        });
-        bottom.add(button3);
         
         //menuBar.setBackground(Color.DARK_GRAY);
         
         //Adding Components to the frame.
         frame.getContentPane().add(BorderLayout.WEST, navigationBar);
-        frame.getContentPane().add(BorderLayout.SOUTH, bottom);
+        frame.getContentPane().add(BorderLayout.SOUTH, bottomPanel);
         frame.getContentPane().add(BorderLayout.NORTH, menuBar);
         //frame.getContentPane().add(BorderLayout.EAST, output);
         
@@ -126,9 +100,7 @@ public class Gui extends JPanel implements Runnable {
 		while(running) {
 			repaint();
 			
-			if(Gui.CURRENT_DATABASE.getTable().getSelectedRow() >= 0) {
-				b.setEnabled(true);
-			} else b.setEnabled(false);
+			bottomPanel.update();
 		}
 	}
 	

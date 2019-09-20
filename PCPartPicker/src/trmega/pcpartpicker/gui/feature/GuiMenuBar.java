@@ -96,7 +96,7 @@ public class GuiMenuBar extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				int confirm = JOptionPane.showConfirmDialog(null, "Do you want to save all databases?");
+				int confirm = JOptionPane.showConfirmDialog(null, "Do you want to save?");
 				
 				if(confirm != JOptionPane.CANCEL_OPTION) {
 					if(confirm == JOptionPane.YES_OPTION) {

@@ -10,6 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import trmega.pcpartpicker.database.Database;
+import trmega.pcpartpicker.gui.Frame;
 import trmega.pcpartpicker.gui.Gui;
 
 @SuppressWarnings("serial")
@@ -36,8 +37,8 @@ public class GuiButton extends JPanel {
 		button.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				gui.switchDatabase(GuiTable.tables[index]);
-				gui.menuBar.setTableName(GuiTable.tables[index]);
+				Gui.gui.switchDatabase(GuiTable.tables[index]);
+				Gui.gui.menuBar.setTableName(GuiTable.tables[index]);
 			}
 		});
 		this.add(button);

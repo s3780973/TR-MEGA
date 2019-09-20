@@ -68,7 +68,7 @@ public class GuiTable extends JPanel {
 		sp.getVerticalScrollBar().setPreferredSize(new Dimension(20, Integer.MAX_VALUE));
 		sp.getHorizontalScrollBar().setPreferredSize(new Dimension(Integer.MAX_VALUE, 20));
 		sp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS); 
-		sp.getViewport().setBackground(Color.BLACK);
+		//sp.getViewport().setBackground(Color.BLUE);
 		//table.setFillsViewportHeight(true);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		table.setSelectionBackground(new Color(80, 255, 240, 70));
@@ -79,25 +79,14 @@ public class GuiTable extends JPanel {
 	    this.add(sp, BorderLayout.CENTER);
 	}
 	
-	private static Object[][] readCSV(File file) throws IOException {
-	    List<Object[]> lines = new ArrayList<>();
-	    try (BufferedReader r = new BufferedReader(new FileReader(file))) {
-	        String line;
-	        while ((line = r.readLine()) != null)
-	            lines.add(line.split(","));
-	    }
-	    return lines.toArray(new Object[lines.size()][]);
-	}
-	
-	
 	/** Add a row to the table */
 	public void addRow() {
 	    tableModel.addRow(new Object[] {});
 	}
 	
+	/** Delete selected row from the table */
 	public void deleteRow() {
 		int[] rows = table.getSelectedRows();
-	    //int colIndex = table.getSelectedColumn();
 		
 	    try {
 	    	for(int i = rows.length-1; i >= 0; i--) {
@@ -108,6 +97,17 @@ public class GuiTable extends JPanel {
 	    }
 	}
 	
+	/** Move selected row up by 1 */
+	public void moveRowUp() {
+		this.moveRowBy(-1);
+	}
+	
+	/** Move selected row down by 1 */
+	public void moveRowDown() {
+		this.moveRowBy(1);
+	}
+	
+	/** Clear the table of all data */
 	public void wipe() {
 		int rowCount = table.getRowCount();
 		
@@ -121,9 +121,30 @@ public class GuiTable extends JPanel {
 		return this.table;
 	}
 	
-	/** Return the Database associated with the GUI */
+	/** Return the Database associated with the table GUI */
 	public Database getDatabase() {
 		return this.database;
+	}
+	
+	private static Object[][] readCSV(File file) throws IOException {
+	    List<Object[]> lines = new ArrayList<>();
+	    try (BufferedReader r = new BufferedReader(new FileReader(file))) {
+	        String line;
+	        while ((line = r.readLine()) != null)
+	            lines.add(line.split(","));
+	    }
+	    return lines.toArray(new Object[lines.size()][]);
+	}
+	
+	private void moveRowBy(int amount) {
+		int[] rows = table.getSelectedRows();
+		int rowCount = table.getRowCount();
+		int destination = rows[0] + amount;
+		
+		if(destination < 0 || destination >= rowCount) return;
+		
+		tableModel.moveRow(rows[0], rows[rows.length - 1], destination);
+		table.setRowSelectionInterval(rows[0] + amount, rows[rows.length - 1] + amount);
 	}
 
 }
