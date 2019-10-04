@@ -28,6 +28,8 @@ public class Database {
 	public static final Database STORAGE = new Database("Storage", Directory.STORAGE, new String[] {"Product Code", "Product Name", "Type", "Capacity", "Transfer Speed", "RPM", "Cache", "Price", "Warranty"});
 	public static final Database OS = new Database("OS", Directory.OS, new String[] {"Product Code", "Product Name", "OS Type", "Version", "Price"});
 	
+	public static final Database PC_BUILDS = new Database("PC Builds", Directory.PC_BUILDS, new String[] {"Build ID", "Build Name", "CPU", "GPU", "Motherboard", "RAM", "CPU Cooling", "Case", "Case Cooling", "PSU", "Storage", "OS"});
+	
 	public static final Database ORDER = new Database("Order", Directory.ORDER, new String[] {"Order No", "Order Name", "Date", "Time", "Progress"});
 	public static final Database ORDER_DETAILS = new Database("Order Details", Directory.ORDER_DETAILS, new String[] {"Order No", "Product No", "Quantity"});
 	
@@ -37,7 +39,7 @@ public class Database {
 	public static final Database USER_TRANSACTIONS = new Database("User Transactions", Directory.USER_TRANSACTIONS, new String[] {"Username", "Past Transaction"});
 	
 	/** List of databases an array */
-	public static final Database[] databases = new Database[] {CPU, GPU, MB, RAM, CPU_COOLING, CASE, CASE_COOLING, PSU, STORAGE, OS, ORDER, ORDER_DETAILS, COMPATABILITY_LISTS, USER, USER_TRANSACTIONS};
+	public static final Database[] databases = new Database[] {CPU, GPU, MB, RAM, CPU_COOLING, CASE, CASE_COOLING, PSU, STORAGE, OS, PC_BUILDS, ORDER, ORDER_DETAILS, COMPATABILITY_LISTS, USER, USER_TRANSACTIONS};
 	
 	/** The name of the Database */
 	private String name;

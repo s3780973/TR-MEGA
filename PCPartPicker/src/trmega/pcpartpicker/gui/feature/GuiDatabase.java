@@ -29,6 +29,7 @@ public class GuiDatabase extends JPanel {
 	public static GuiDatabase PSU = new GuiDatabase(Database.PSU);
 	public static GuiDatabase STORAGE = new GuiDatabase(Database.STORAGE);
 	public static GuiDatabase OS = new GuiDatabase(Database.OS);
+	public static GuiDatabase PC_BUILDS = new GuiDatabase(Database.PC_BUILDS);
 	public static GuiDatabase ORDER = new GuiDatabase(Database.ORDER);
 	public static GuiDatabase ORDER_DETAILS = new GuiDatabase(Database.ORDER_DETAILS);
 	public static GuiDatabase COMPATABILITY_LISTS = new GuiDatabase(Database.COMPATABILITY_LISTS);
@@ -36,7 +37,7 @@ public class GuiDatabase extends JPanel {
 	public static GuiDatabase USER_TRANSACTIONS = new GuiDatabase(Database.USER_TRANSACTIONS);
 	
 	public static GuiDatabase[] tables = new GuiDatabase[] {CPU, GPU, MB, RAM, CPU_COOLING, CASE, CASE_COOLING, PSU, STORAGE, OS,
-		ORDER, ORDER_DETAILS, COMPATABILITY_LISTS, USER, USER_TRANSACTIONS};
+		PC_BUILDS, ORDER, ORDER_DETAILS, COMPATABILITY_LISTS, USER, USER_TRANSACTIONS};
 	
 	/** The Database that is associated with the table GUI */
 	private Database database;

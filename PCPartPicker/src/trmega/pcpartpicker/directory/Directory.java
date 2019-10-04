@@ -15,6 +15,8 @@ public interface Directory {
 	public static final File STORAGE = new File("database/stock/storage.csv");
 	public static final File OS = new File("database/stock/os.csv");
 	
+	public static final File PC_BUILDS = new File("database/builds/pc_builds.csv");
+	
 	public static final File ORDER = new File("database/transaction/order.csv");
 	public static final File ORDER_DETAILS = new File("database/transaction/order_details.csv");
 	
